@@ -2,6 +2,7 @@ use std::fmt;
 use std::str::FromStr;
 
 use jiff::civil::Date;
+use serde::Deserialize;
 
 #[derive(Debug, thiserror::Error)]
 pub enum IdError {
@@ -82,7 +83,8 @@ impl Congress {
     }
 }
 
-#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
+#[derive(Clone, Copy, Debug, Deserialize, Eq, Hash, PartialEq)]
+#[serde(rename_all = "UPPERCASE")]
 pub enum BillType {
     Hr,
     Hjres,
