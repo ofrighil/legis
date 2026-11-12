@@ -8,6 +8,13 @@ pub struct Client {
     agent: ureq::Agent,
 }
 
+#[derive(Debug)]
+pub struct Fetched<T> {
+    pub url: String,
+    pub body: Vec<u8>,
+    pub value: T,
+}
+
 impl Client {
     pub fn new() -> Self {
         let agent = ureq::Agent::config_builder()
@@ -37,10 +44,19 @@ impl Client {
         Ok(HttpResponse { status, body })
     }
 
-    pub fn fetch<E: Endpoint>(&self, api_key: &ApiKey, endpoint: &E) -> Result<E::Response> {
+    pub fn fetch<E: Endpoint>(
+        &self,
+        api_key: &ApiKey,
+        endpoint: &E,
+    ) -> Result<Fetched<E::Response>> {
         let req = request(api_key, endpoint);
         let resp = self.send(&req)?;
-        Ok(decode::<E>(&req.url, resp)?)
+        let value = decode::<E>(&req.url, &resp)?;
+        Ok(Fetched {
+            url: req.url,
+            body: resp.body,
+            value,
+        })
     }
 }
 

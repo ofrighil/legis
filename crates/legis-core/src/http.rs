@@ -64,7 +64,7 @@ pub fn request<E: Endpoint>(api_key: &ApiKey, endpoint: &E) -> HttpRequest {
     }
 }
 
-pub fn decode<E: Endpoint>(url: &str, response: HttpResponse) -> Result<E::Response> {
+pub fn decode<E: Endpoint>(url: &str, response: &HttpResponse) -> Result<E::Response> {
     if !(200..300).contains(&response.status) {
         Err(Error::Http {
             status: response.status,

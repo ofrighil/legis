@@ -2,7 +2,7 @@ use serde::Deserialize;
 
 use super::CountedLink;
 use crate::http::Endpoint;
-use crate::ids::BioguideId;
+use crate::ids::{BioguideId, Congress};
 
 pub struct Get(pub BioguideId);
 
@@ -51,7 +51,7 @@ pub struct PartyHistory {
 #[serde(rename_all = "camelCase")]
 pub struct Term {
     pub chamber: String,
-    pub congress: u16,
+    pub congress: Congress,
     pub member_type: String,
     pub start_year: u16,
     pub end_year: Option<u16>,

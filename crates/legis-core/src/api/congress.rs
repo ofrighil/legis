@@ -2,6 +2,7 @@ use jiff::civil::Date;
 use serde::Deserialize;
 
 use crate::http::Endpoint;
+use crate::ids::Congress;
 
 pub struct Current;
 
@@ -21,7 +22,7 @@ pub struct CongressResponse {
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CongressDetail {
-    pub number: u16,
+    pub number: Congress,
     pub end_year: String,
     pub name: String,
     pub sessions: Vec<CongressSession>,

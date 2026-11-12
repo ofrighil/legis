@@ -4,7 +4,7 @@ use serde::Deserialize;
 
 use super::CountedLink;
 use crate::http::Endpoint;
-use crate::ids::{BillId, BillType};
+use crate::ids::{BillId, BillType, Congress};
 
 pub struct Get(pub BillId);
 
@@ -25,7 +25,7 @@ pub struct BillResponse {
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct BillDetail {
-    pub congress: u16,
+    pub congress: Congress,
     #[serde(rename = "type")]
     pub kind: BillType,
     pub number: String,

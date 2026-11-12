@@ -12,6 +12,8 @@ pub enum IdError {
     BillType(String),
     #[error("invalid bill ID {0:?}: expected <congress>-<type>-<number>")]
     BillId(String),
+    #[error("invalid congress {0}: must be at least 1")]
+    Congress(u16),
 }
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq)]
@@ -44,12 +46,21 @@ impl AsRef<str> for BioguideId {
     }
 }
 
-#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
+#[derive(Clone, Copy, Debug, Deserialize, Eq, Hash, PartialEq)]
+#[serde(try_from = "u16")]
 pub struct Congress(u16);
 
 impl fmt::Display for Congress {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         self.0.fmt(f)
+    }
+}
+
+impl TryFrom<u16> for Congress {
+    type Error = IdError;
+
+    fn try_from(n: u16) -> Result<Self, Self::Error> {
+        Self::new(n).ok_or(IdError::Congress(n))
     }
 }
 
