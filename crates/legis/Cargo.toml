@@ -1,0 +1,11 @@
+[package]
+name = "legis"
+description = "congress.gov API client"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+legis-core.workspace = true
+thiserror.workspace = true
+ureq.workspace = true
