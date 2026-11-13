@@ -1,8 +1,8 @@
 use jiff::Timestamp;
-use jiff::civil::{Date, Time};
+use jiff::civil::Date;
 use serde::Deserialize;
 
-use super::CountedLink;
+use super::{CountedLink, LatestAction, PolicyArea};
 use crate::http::Endpoint;
 use crate::ids::{BillId, BillType, Congress};
 
@@ -48,19 +48,6 @@ pub struct BillDetail {
     pub summaries: Option<CountedLink>,
     pub text_versions: Option<CountedLink>,
     pub titles: Option<CountedLink>,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct PolicyArea {
-    pub name: String,
-}
-
-#[derive(Debug, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct LatestAction {
-    pub action_date: Date,
-    pub action_time: Option<Time>,
-    pub text: String,
 }
 
 #[derive(Debug, Deserialize)]
